@@ -1,7 +1,7 @@
-import {XWindow} from "../XWindow";
 import React from "react";
-import {Form} from "./Form";
-import {SubmitButton} from "./SubmitButton";
+import {Form} from "./form";
+import {SubmitButton} from "./submit_button";
+import {XWindow} from "../../XWindow";
 
 interface FormProps {
     handleSubmit: () => void;

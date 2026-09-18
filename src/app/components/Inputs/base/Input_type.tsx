@@ -1,0 +1,1 @@
+export type Input_type = "text" | "password" | "tel" | "email" | "date" | "time" | "file";

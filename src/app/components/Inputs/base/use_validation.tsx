@@ -1,11 +1,14 @@
 import {useState} from "react";
 
-interface ValidationOptions<T> {
+export function useValidation<T>(options: {
     isRequired?: boolean;
     validate?: (value: T) => string | null;
-}
-
-export function useValidation<T>(options: ValidationOptions<T>) {
+}): {
+    error: string;
+    setError: (v: string) => void;
+    isValid: (v: T) => boolean;
+    clearError: () => void;
+} {
     const [error, setError] = useState('');
 
     const validateValue = (val: T): string | null => {
@@ -18,17 +21,12 @@ export function useValidation<T>(options: ValidationOptions<T>) {
         return null;
     };
 
-    const isValid = (val: T) : boolean => {
+    const isValid = (val: T): boolean => {
         let result = validateValue(val);
         setError(result || '');
         return !result;
     };
     const clearError = () => setError('');
 
-    return {
-        error,
-        setError,
-        isValid,
-        clearError,
-    };
+    return {error, setError, isValid, clearError,};
 }

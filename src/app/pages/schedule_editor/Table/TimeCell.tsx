@@ -1,17 +1,17 @@
 import React, {useRef, useState} from "react";
 import {KeyValueLabel} from "./KeyValueLabel";
 import {VerticalHeader} from "./VerticalHeader";
-import {InputRef} from "../../../components/Inputs/Components/InputRef";
 import {Clickable} from "../../../components/Primitives/Clickable";
 import {Modal} from "../../../components/Modal";
-import {Form} from "../../../components/Inputs/Form";
 import {Column} from "../../../components/Primitives/Column/Column";
 import {Spacings} from "../../../style/spacings";
-import {TimePicker} from "../../../components/Inputs/TimePicker";
 import {PrimaryButton} from "../../../components/Buttons/PrimaryButton";
 import {
     ScheduleEditorRepository
 } from "../../../../auto_generated_api/repositories/schedule_editor_functional/schedule_editor/schedule_editor_repository";
+import {TimePicker} from "../../../components/Inputs/simple_inputs/time_picker";
+import {InputRef} from "../../../components/Inputs/base/Input_ref";
+import {Form} from "../../../components/Inputs/form/form";
 
 export const TimeCell: React.FC<{
     time: string;
@@ -39,7 +39,7 @@ export const TimeCell: React.FC<{
                     {KeyValueLabel({key: "Текущее время:", value: p.time})}
                     {KeyValueLabel({key: "Номер пары:", value: p.pairIndex + 1})}
                 </Column>,
-                <TimePicker label="Новое время" isRequired onValidChange={setEditData}/>,
+                <TimePicker label="Новое время" isRequired onValidChange={setEditData} ref={refs.value}/>,
                 <PrimaryButton full onClick={handleSave}>
                     Сохранить
                 </PrimaryButton>

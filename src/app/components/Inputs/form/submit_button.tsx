@@ -1,10 +1,10 @@
 import React from "react";
-import {Padding} from "../Primitives/Padding";
-import {XText} from "../Primitives/Text";
-import {Background} from "../Primitives/Background";
-import {Border} from "../Primitives/Border";
-import {Colors} from "../../style/colors";
-import {maxSize} from "../../style/spacings";
+import {maxSize} from "../../../style/spacings";
+import {Border} from "../../Primitives/Border";
+import {Background} from "../../Primitives/Background";
+import {Colors} from "../../../style/colors";
+import {Padding} from "../../Primitives/Padding";
+import {XText} from "../../Primitives/Text";
 
 export const SubmitButton: React.FC<{ buttonText: string }> = (p) =>
     <Border color={"transparent"} radius={6}>

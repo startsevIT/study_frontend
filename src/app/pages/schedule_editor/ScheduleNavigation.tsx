@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {InputRef} from "../../components/Inputs/Components/InputRef";
 import {XWindow} from "../../components/XWindow";
 import {Row} from "../../components/Primitives/Row/Row";
 import {SecondaryButton} from "../../components/Buttons/SecondaryButton";
@@ -7,10 +6,7 @@ import {FontSizes, Spacings} from "../../style/spacings";
 import {XText} from "../../components/Primitives/Text";
 import {PrimaryButton} from "../../components/Buttons/PrimaryButton";
 import {Modal} from "../../components/Modal";
-import {Form} from "../../components/Inputs/Form";
 import {Column} from "../../components/Primitives/Column/Column";
-import {FilePicker} from "../../components/Inputs/FilePicker";
-import {SubmitButton} from "../../components/Inputs/SubmitButton";
 import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
 import {FaChevronRight} from "@react-icons/all-files/fa/FaChevronRight";
 import {FaTruckLoading} from "@react-icons/all-files/fa/FaTruckLoading";
@@ -21,6 +17,10 @@ import {FaChevronLeft} from "@react-icons/all-files/fa/FaChevronLeft";
 import {
     ScheduleEditorRepository
 } from "../../../auto_generated_api/repositories/schedule_editor_functional/schedule_editor/schedule_editor_repository";
+import {FilePicker} from "../../components/Inputs/file_picker/new_file_picker";
+import {InputRef} from "../../components/Inputs/base/Input_ref";
+import {Form} from "../../components/Inputs/form/form";
+import {SubmitButton} from "../../components/Inputs/form/submit_button";
 
 export const ScheduleNavigation: React.FC<{
     onAddWeek: () => void;

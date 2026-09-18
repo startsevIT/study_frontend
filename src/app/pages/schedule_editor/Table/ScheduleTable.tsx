@@ -6,8 +6,8 @@ import {VerticalHeader} from "./VerticalHeader";
 import {Table, TableColumn} from "../../../components/Table/Table";
 import {Colors} from "../../../style/colors";
 import {formatDate, getDayOfWeek} from "../../../extensions/DateExtensions";
-import {KeyValuePair} from "../../../components/Inputs/KeyValuePair";
 import {ScheduleResponse} from "../../../../auto_generated_api/repositories/schedule_editor_functional/schedule_editor/models";
+import {KeyValuePair} from "../../../components/Inputs/base/key_value_pair";
 
 interface PairRowProps {
     pairCount: number;
@@ -50,8 +50,8 @@ export const ScheduleTable: React.FC<{
                         };
                     })
                 ).sort((l, r) => {
-                    if (l.day.value !== r.day.value) {
-                        return l.day.value! > r.day.value! ? 1 : -1;
+                    if (l.day.Value !== r.day.Value) {
+                        return l.day.Value! > r.day.Value! ? 1 : -1;
                     }
                     return l.pairNumber - r.pairNumber;
                 });
@@ -78,7 +78,7 @@ export const ScheduleTable: React.FC<{
                 isSticky: true,
                 rowSpan: (x: PairRowProps) => x.pairCount,
                 builder: (x: PairRowProps, _: number) => <VerticalHeader height="85%">
-                    {`${getDayOfWeek(x.day.value)} (${formatDate(x.day.value)})`}
+                    {`${getDayOfWeek(x.day.Value)} (${formatDate(x.day.Value)})`}
                 </VerticalHeader>
             }
         },
@@ -91,7 +91,7 @@ export const ScheduleTable: React.FC<{
                     group={new KeyValuePair(group.id!, group.name!)}
                     day={x.day}
                     pairNumber={x.pairNumber}
-                    backgroundColor={new Date(x.day.value).getDay() % 2 === 0 ? Colors.secondaryBackground : Colors.secondaryBackground2}
+                    backgroundColor={new Date(x.day.Value).getDay() % 2 === 0 ? Colors.secondaryBackground : Colors.secondaryBackground2}
                 />
             }
         })),
@@ -101,7 +101,7 @@ export const ScheduleTable: React.FC<{
                 isSticky: true,
                 builder: (x: PairRowProps, _: number) => <TimeCell
                     time={x.time}
-                    dayId={x.day.key}
+                    dayId={x.day.Key}
                     pairIndex={x.pairNumber}
                 />
             }

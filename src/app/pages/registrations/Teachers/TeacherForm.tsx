@@ -1,15 +1,17 @@
 import React, {useEffect, useRef, useState} from "react";
-import {InputRef} from "../../../components/Inputs/Components/InputRef";
 import {TeacherRegisterModel} from "../../../../auto_generated_api/repositories/manager_functional/teacher/models";
 import {ManagerDisciplineResponse} from "../../../../auto_generated_api/repositories/manager_functional/disciplines/models";
 import {DisciplinesRepository} from "../../../../auto_generated_api/repositories/manager_functional/disciplines/disciplines_repository";
-import {FormWindow} from "../../../components/Inputs/FormWindow";
 import {Row} from "../../../components/Primitives/Row/Row";
 import {Spacings} from "../../../style/spacings";
 import {Column} from "../../../components/Primitives/Column/Column";
-import {Input} from "../../../components/Inputs/Input";
-import {Multiselect} from "../../../components/Inputs/Multiselect";
-import {KeyValuePair} from "../../../components/Inputs/KeyValuePair";
+import {TextInput} from "../../../components/Inputs/simple_inputs/text_input";
+import {EmailInput} from "../../../components/Inputs/simple_inputs/email_input";
+import {PhoneInput} from "../../../components/Inputs/simple_inputs/phone_input";
+import {Multiselect} from "../../../components/Inputs/multiinputs/multiselect/multiselect";
+import {InputRef} from "../../../components/Inputs/base/Input_ref";
+import {FormWindow} from "../../../components/Inputs/form/form_window";
+import {KeyValuePair} from "../../../components/Inputs/base/key_value_pair";
 
 export const TeacherForm: React.FC<{ onAdd: (teacher: TeacherRegisterModel) => void }> = ({onAdd}) => {
     const empty = {firstName: '', secondName: '', patronymic: '', email: '', phone: '', disciplinesIds: []};
@@ -38,49 +40,21 @@ export const TeacherForm: React.FC<{ onAdd: (teacher: TeacherRegisterModel) => v
     return <FormWindow handleSubmit={handleSubmit} buttonText="Добавить преподавателя" title="Регистрация преподавателей" refs={refs}>
         <Row gap={Spacings.L}>
             <Column gap={Spacings.L}>
-                <Input
-                    ref={refs.secondName}
-                    label="Фамилия"
-                    isRequired
+                <TextInput ref={refs.secondName} label="Фамилия" isRequired
                     onValidChange={(value) => setFormData({...formData, lastName: value})}
                 />
-                <Input
-                    ref={refs.firstName}
-                    label="Имя"
-                    isRequired
+                <TextInput ref={refs.firstName} label="Имя" isRequired
                     onValidChange={(value) => setFormData({...formData, firstName: value})}
                 />
-                <Input
-                    ref={refs.patronymic}
-                    label="Отчество"
+                <TextInput ref={refs.patronymic} label="Отчество"
                     onValidChange={(value) => setFormData({...formData, patronymic: value})}
                 />
             </Column>
             <Column gap={Spacings.L}>
-                <Input
-                    ref={refs.email}
-                    label="Email"
-                    type="email"
-                    placeholder="student@mail.com"
-                    isRequired
-                    validate={(v) =>
-                        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
-                            ? 'Некорректный email'
-                            : null
-                    }
+                <EmailInput ref={refs.email} isRequired
                     onValidChange={(value) => setFormData({...formData, email: value})}
                 />
-                <Input
-                    ref={refs.phone}
-                    label="Телефон"
-                    type="tel"
-                    placeholder="+7XXXXXXXXXX"
-                    isRequired
-                    validate={(v) =>
-                        !/^\+?[0-9]{10,15}$/.test(v.replace(/[\s\-()]/g, ''))
-                            ? 'Некорректный телефон'
-                            : null
-                    }
+                <PhoneInput ref={refs.phone} isRequired
                     onValidChange={(value) => setFormData({...formData, phone: value})}
                 />
                 <Multiselect
@@ -88,7 +62,7 @@ export const TeacherForm: React.FC<{ onAdd: (teacher: TeacherRegisterModel) => v
                     isRequired
                     label={"Дисциплины"}
                     items={disciplines.map(x => new KeyValuePair(x.id!, x.name!))}
-                    onValidChange={(value) => setFormData({...formData, disciplinesIds: value.map(x => x.key)})}
+                    onValidChange={value => setFormData({...formData, disciplinesIds: value.map(x => x.Key)})}
                     onAddItem={async (item) => {
                         await DisciplinesRepository.post({name: item});
                         setDisciplines(await DisciplinesRepository.get());

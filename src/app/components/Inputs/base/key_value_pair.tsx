@@ -1,21 +1,21 @@
 export class KeyValuePair {
-    key: string;
-    value: string;
+    private readonly key: string;
+    private readonly value: string;
 
     constructor(key: string, value: string) {
         this.key = key;
         this.value = value;
     }
 
-    getValue(): string {
+    public get Value(): string {
         return this.value.toLowerCase();
     }
 
-    getKey(): string {
+    public get Key(): string {
         return this.key;
     }
 
     includes(value: string): boolean {
-        return this.getValue().includes(value.toLowerCase());
+        return this.value.includes(value.toLowerCase());
     }
 }
