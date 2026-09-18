@@ -8,7 +8,7 @@ import {Column} from "../../../components/Primitives/Column/Column";
 import {TextInput} from "../../../components/Inputs/simple_inputs/text_input";
 import {EmailInput} from "../../../components/Inputs/simple_inputs/email_input";
 import {PhoneInput} from "../../../components/Inputs/simple_inputs/phone_input";
-import {Multiselect} from "../../../components/Inputs/multiinputs/multiselect/multiselect";
+import {Multiselect} from "../../../components/Inputs/multiinputs/multiselect";
 import {InputRef} from "../../../components/Inputs/base/Input_ref";
 import {FormWindow} from "../../../components/Inputs/form/form_window";
 import {KeyValuePair} from "../../../components/Inputs/base/key_value_pair";
@@ -62,7 +62,7 @@ export const TeacherForm: React.FC<{ onAdd: (teacher: TeacherRegisterModel) => v
                     isRequired
                     label={"Дисциплины"}
                     items={disciplines.map(x => new KeyValuePair(x.id!, x.name!))}
-                    onValidChange={value => setFormData({...formData, disciplinesIds: value.map(x => x.Key)})}
+                    onValidChange={value => setFormData({...formData, disciplinesIds: value.map(x => x.key)})}
                     onAddItem={async (item) => {
                         const newDiscipline = await DisciplinesRepository.post({name: item});
                         setDisciplines([...disciplines, newDiscipline]);

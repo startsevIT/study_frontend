@@ -1,13 +1,18 @@
-﻿import React, {forwardRef, useImperativeHandle, useState} from "react";
-import {InputRef} from "../../base/Input_ref";
-import {KeyValuePair} from "../../base/key_value_pair";
-import {useValidation} from "../../base/use_validation";
-import {InputWrapper} from "../../base/input_wrapper";
-import {AutocompleteProps} from "./autocomplete_props";
-import {DropdownWrapper} from "../base/dropdown_wrapper";
-import {InputFieldWrapper} from "../../base/input_field_wrapper";
-import {InputField} from "../../base/input_field";
-import {Dropdown} from "../base/dropdown";
+import React, {forwardRef, useImperativeHandle, useState} from "react";
+import {InputRef} from "../base/Input_ref";
+import {KeyValuePair} from "../base/key_value_pair";
+import {useValidation} from "../base/use_validation";
+import {InputWrapper} from "../base/input_wrapper";
+import {DropdownWrapper} from "./base/dropdown_wrapper";
+import {InputFieldWrapper} from "../base/input_field_wrapper";
+import {InputField} from "../base/input_field";
+import {Dropdown} from "./base/dropdown";
+import {SimpleInputProps} from "../base/simple_input_props";
+
+export interface AutocompleteProps extends SimpleInputProps<KeyValuePair> {
+    items: KeyValuePair[];
+    onAddItem?: (item: string) => Promise<KeyValuePair>;
+}
 
 export const Autocomplete = forwardRef<InputRef, AutocompleteProps>((p, ref) => {
     const [value, setValue] = useState<KeyValuePair | null>(null);
@@ -27,7 +32,7 @@ export const Autocomplete = forwardRef<InputRef, AutocompleteProps>((p, ref) => 
     }));
 
     const toggleItem = (key: string) => {
-        const newValue = p.items.find(x => x.Key === key);
+        const newValue = p.items.find(x => x.key === key);
         if (!newValue)
             return;
         update(newValue);
@@ -48,14 +53,14 @@ export const Autocomplete = forwardRef<InputRef, AutocompleteProps>((p, ref) => 
                     onChange={setQuery}
                     type="text"
                     placeholder={!value ? p.placeholder ?? p.label : ''}
-                    value={isOpen ? query : value?.Value ?? ''}
+                    value={isOpen ? query : value?.value ?? ''}
                 />
             </InputFieldWrapper>
             {isOpen && <Dropdown
                 query={query}
                 items={p.items}
                 toggleItem={toggleItem}
-                isSelected={k => value?.Key === k}
+                isSelected={k => value?.key === k}
                 onAddItem={async (v) => {
                     const newValue = await p.onAddItem!(v);
                     update(newValue);

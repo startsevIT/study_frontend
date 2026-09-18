@@ -2,7 +2,7 @@ import {useState} from "react";
 
 export function useValidation<T>(options: {
     isRequired?: boolean;
-    validate?: (value: T) => string | null;
+    validate?: (value: T) => string | false;
 }): {
     error: string;
     setError: (v: string) => void;
@@ -11,14 +11,14 @@ export function useValidation<T>(options: {
 } {
     const [error, setError] = useState('');
 
-    const validateValue = (val: T): string | null => {
+    const validateValue = (val: T): string | false => {
         if (options.isRequired) {
             if (Array.isArray(val) && val.length === 0) return 'Обязательное поле';
             if (typeof val === 'string' && !val.trim()) return 'Обязательное поле';
             if (!val) return 'Обязательное поле';
         }
         if (options.validate) return options.validate(val);
-        return null;
+        return false;
     };
 
     const isValid = (val: T): boolean => {

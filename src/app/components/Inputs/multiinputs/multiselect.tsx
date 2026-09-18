@@ -1,14 +1,19 @@
-﻿import React, {forwardRef, useImperativeHandle, useState} from "react";
-import {useValidation} from "../../base/use_validation";
-import {KeyValuePair} from "../../base/key_value_pair";
-import {InputWrapper} from "../../base/input_wrapper";
-import {MultiselectProps} from "./multiselect_props";
-import {InputRef} from "../../base/Input_ref";
-import {InputField} from "../../base/input_field";
-import {DropdownWrapper} from "../base/dropdown_wrapper";
-import {InputFieldWrapper} from "../../base/input_field_wrapper";
-import {Dropdown} from "../base/dropdown";
-import {InputCountSpan} from "../../base/inputCountSpan";
+import React, {forwardRef, useImperativeHandle, useState} from "react";
+import {useValidation} from "../base/use_validation";
+import {KeyValuePair} from "../base/key_value_pair";
+import {InputWrapper} from "../base/input_wrapper";
+import {InputRef} from "../base/Input_ref";
+import {InputField} from "../base/input_field";
+import {DropdownWrapper} from "./base/dropdown_wrapper";
+import {InputFieldWrapper} from "../base/input_field_wrapper";
+import {Dropdown} from "./base/dropdown";
+import {InputCountSpan} from "../base/inputCountSpan";
+import {SimpleInputProps} from "../base/simple_input_props";
+
+export interface MultiselectProps extends SimpleInputProps<KeyValuePair[]> {
+    items: KeyValuePair[];
+    onAddItem?: (item: string) => Promise<KeyValuePair>;
+}
 
 export const Multiselect = forwardRef<InputRef, MultiselectProps>((p, ref) => {
     const [value, setValue] = useState<KeyValuePair[]>([]);
@@ -28,9 +33,9 @@ export const Multiselect = forwardRef<InputRef, MultiselectProps>((p, ref) => {
     }));
 
     const toggleItem = (key: string) => {
-        const newValue = value.some(x => x.Key === key)
-            ? value.filter(k => k.Key !== key)
-            : [...value, p.items.find(x => x.Key === key)!]
+        const newValue = value.some(x => x.key === key)
+            ? value.filter(k => k.key !== key)
+            : [...value, p.items.find(x => x.key === key)!]
 
         p.onValidChange(newValue);
         setValue(newValue);
@@ -56,7 +61,7 @@ export const Multiselect = forwardRef<InputRef, MultiselectProps>((p, ref) => {
                 query={query}
                 items={p.items}
                 toggleItem={toggleItem}
-                isSelected={k => value.some(x => x.Key === k)}
+                isSelected={k => value.some(x => x.key === k)}
                 onAddItem={async (v) => {
                     const newValue = await p.onAddItem!(v);
                     setValue([...value, newValue]);

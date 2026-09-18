@@ -10,8 +10,4 @@ export const EmailInput: FC<SimpleInputWithoutLabelProps> = (p) =>
         onValidChange={p.onValidChange}
         type='email'
         placeholder="example@mail.com"
-        validate={(v) =>
-            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
-                ? 'Некорректный email'
-                : null
-        }/>
+        validate={v => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) && 'Некорректный email'}/>

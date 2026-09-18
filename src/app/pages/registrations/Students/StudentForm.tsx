@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {Spacings} from "../../../style/spacings";
 import {Row} from "../../../components/Primitives/Row/Row";
 import {Column} from "../../../components/Primitives/Column/Column";
@@ -8,7 +8,7 @@ import {ManagerGroupResponse} from "../../../../auto_generated_api/repositories/
 import {TextInput} from "../../../components/Inputs/simple_inputs/text_input";
 import {EmailInput} from "../../../components/Inputs/simple_inputs/email_input";
 import {PhoneInput} from "../../../components/Inputs/simple_inputs/phone_input";
-import {Autocomplete} from "../../../components/Inputs/multiinputs/autocomplete/autocomplete";
+import {Autocomplete} from "../../../components/Inputs/multiinputs/autocomplete";
 import {InputRef} from "../../../components/Inputs/base/Input_ref";
 import {FormWindow} from "../../../components/Inputs/form/form_window";
 import {KeyValuePair} from "../../../components/Inputs/base/key_value_pair";
@@ -55,7 +55,7 @@ export const StudentForm: React.FC<{
                     placeholder="Напр. ИВ-101"
                     isRequired
                     items={p.groups.map(x => new KeyValuePair(x.id!, x.name!))}
-                    onValidChange={value => setFormData(prev => ({...prev, groupId: value.Key}))}
+                    onValidChange={value => setFormData(prev => ({...prev, groupId: value.key}))}
                     onAddItem={async (item) => {
                         const newGroup = await GroupsRepository.post({name: item});
                         p.onGroupAdded(newGroup);

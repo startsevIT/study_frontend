@@ -12,7 +12,7 @@ export const InputBase = forwardRef<InputRef, {
     value?: string;
     isRequired?: boolean;
     placeholder?: string;
-    validate?: (value: string) => string | null;
+    validate?: (value: string) => string | false;
     onValidChange: (value: string) => void;
     type?: Input_type;
 }>((p, ref) => {

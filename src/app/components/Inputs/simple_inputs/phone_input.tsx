@@ -10,8 +10,4 @@ export const PhoneInput: FC<SimpleInputWithoutLabelProps> = (p) =>
         onValidChange={p.onValidChange}
         type='tel'
         placeholder="+7XXXXXXXXXX"
-        validate={(v) =>
-            !/^\+?[0-9]{10,15}$/.test(v.replace(/[\s\-()]/g, ''))
-                ? 'Некорректный телефон'
-                : null
-        }/>
+        validate={v => !/^\+?[0-9]{10,15}$/.test(v.replace(/[\s\-()]/g, '')) && 'Некорректный телефон'}/>

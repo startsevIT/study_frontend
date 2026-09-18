@@ -50,8 +50,8 @@ export const ScheduleTable: React.FC<{
                         };
                     })
                 ).sort((l, r) => {
-                    if (l.day.Value !== r.day.Value) {
-                        return l.day.Value! > r.day.Value! ? 1 : -1;
+                    if (l.day.value !== r.day.value) {
+                        return l.day.value! > r.day.value! ? 1 : -1;
                     }
                     return l.pairNumber - r.pairNumber;
                 });
@@ -78,7 +78,7 @@ export const ScheduleTable: React.FC<{
                 isSticky: true,
                 rowSpan: (x: PairRowProps) => x.pairCount,
                 builder: (x: PairRowProps, _: number) => <VerticalHeader height="85%">
-                    {`${getDayOfWeek(x.day.Value)} (${formatDate(x.day.Value)})`}
+                    {`${getDayOfWeek(x.day.value)} (${formatDate(x.day.value)})`}
                 </VerticalHeader>
             }
         },
@@ -92,7 +92,7 @@ export const ScheduleTable: React.FC<{
                     group={new KeyValuePair(group.id!, group.name!)}
                     day={x.day}
                     pairNumber={x.pairNumber}
-                    backgroundColor={new Date(x.day.Value).getDay() % 2 === 0 ? Colors.secondaryBackground : Colors.secondaryBackground2}
+                    backgroundColor={new Date(x.day.value).getDay() % 2 === 0 ? Colors.secondaryBackground : Colors.secondaryBackground2}
                 />
             }
         })),
@@ -102,7 +102,7 @@ export const ScheduleTable: React.FC<{
                 isSticky: true,
                 builder: (x: PairRowProps, _: number) => <TimeCell
                     time={x.time}
-                    dayId={x.day.Key}
+                    dayId={x.day.key}
                     pairIndex={x.pairNumber}
                 />
             }

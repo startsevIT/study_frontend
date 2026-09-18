@@ -20,7 +20,7 @@ import {TiDocumentAdd} from "@react-icons/all-files/ti/TiDocumentAdd";
 import {ScheduleTeacherResponse} from "../../../../auto_generated_api/repositories/schedule_editor_functional/schedule_editor/models";
 import {PairsRepository} from "../../../../auto_generated_api/repositories/schedule_editor_functional/pairs/pairs_repository";
 import {TextInput} from "../../../components/Inputs/simple_inputs/text_input";
-import {Autocomplete} from "../../../components/Inputs/multiinputs/autocomplete/autocomplete";
+import {Autocomplete} from "../../../components/Inputs/multiinputs/autocomplete";
 import {KeyValuePair} from "../../../components/Inputs/base/key_value_pair";
 import {InputRef} from "../../../components/Inputs/base/Input_ref";
 import {Form} from "../../../components/Inputs/form/form";
@@ -50,17 +50,17 @@ export const PairCell: React.FC<{
         if (p.value?.id)
             await PairsRepository.put(p.value.id, {
                 cabinet: editData?.cabinet,
-                teacherId: editData?.teacher?.Key,
-                disciplineId: editData?.discipline?.Key
+                teacherId: editData?.teacher?.key,
+                disciplineId: editData?.discipline?.key
             });
         else
             await PairsRepository.post({
-                groupId: p.group.Key,
-                dayId: p.day.Key,
+                groupId: p.group.key,
+                dayId: p.day.key,
                 number: p.pairNumber,
                 cabinet: editData!.cabinet,
-                teacherId: editData!.teacher!.Key,
-                disciplineId: editData!.discipline!.Key
+                teacherId: editData!.teacher!.key,
+                disciplineId: editData!.discipline!.key
             })
         setData(editData);
         setEditData(null);
@@ -91,7 +91,7 @@ export const PairCell: React.FC<{
                             <div style={{borderRight: `1px solid ${Colors.border}`, height: 70}}>
                                 <Padding size={5}>
                                     <XText size={FontSizes.S} align={"center"}>
-                                        {data!.discipline?.Value ?? "ошибка"}
+                                        {data!.discipline?.value ?? "ошибка"}
                                     </XText>
                                 </Padding>
                             </div>
@@ -110,7 +110,7 @@ export const PairCell: React.FC<{
             </ColumnElement>
             <Center>
                 <XText size={FontSizes.S} color={Colors.text} align={"center"}>
-                    {data!.teacher?.Value ?? "ошибка"}
+                    {data!.teacher?.value ?? "ошибка"}
                 </XText>
             </Center>
         </Column>
@@ -142,21 +142,21 @@ export const PairCell: React.FC<{
                     <Autocomplete
                         ref={refs.teacher}
                         label="Преподаватель"
-                        placeholder={data?.teacher?.Value ?? "Начните вводить значение..."}
+                        placeholder={data?.teacher?.value ?? "Начните вводить значение..."}
                         isRequired
                         items={p.teachers.map(x => new KeyValuePair(x.id!, x.fullName!))}
                         onValidChange={async (v) => {
                             setEditData({...editData, teacher: v});
-                            const disciplinesIds = p.teachers.find(t => t.id === v.Key)?.disciplineIds;
-                            setDisciplines(p.allDisciplines.filter(x => disciplinesIds?.includes(x.Key)));
+                            const disciplinesIds = p.teachers.find(t => t.id === v.key)?.disciplineIds;
+                            setDisciplines(p.allDisciplines.filter(x => disciplinesIds?.includes(x.key)));
                         }}
                     />
                     {editData?.teacher && <Autocomplete
                         ref={refs.discipline}
                         label="Предмет"
-                        placeholder={data?.discipline?.Value ?? "Начните вводить значение..."}
+                        placeholder={data?.discipline?.value ?? "Начните вводить значение..."}
                         isRequired
-                        items={disciplines.map(x => new KeyValuePair(x.Key, x.Value))}
+                        items={disciplines.map(x => new KeyValuePair(x.key, x.value))}
                         onValidChange={(v) => setEditData({...editData, discipline: v})}
                     />}
                     <TextInput
@@ -167,9 +167,9 @@ export const PairCell: React.FC<{
                         onValidChange={(v) => setEditData({...editData, cabinet: v})}
                     />
                     <Column gap={Spacings.Zero}>
-                        {KeyValueLabel({key: "Группа:", value: p.group.Value})}
+                        {KeyValueLabel({key: "Группа:", value: p.group.value})}
                         {KeyValueLabel({key: "Номер пары:", value: p.pairNumber + 1})}
-                        {KeyValueLabel({key: "Дата", value: formatDate(p.day.Value)})}
+                        {KeyValueLabel({key: "Дата", value: formatDate(p.day.value)})}
                     </Column>
                     <Row gap={Spacings.S}>
                         <RowElement sizePercent={p.value ? 90 : 100}>

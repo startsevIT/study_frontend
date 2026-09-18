@@ -1,4 +1,4 @@
-﻿import {InputWrapper} from "../base/input_wrapper";
+import {InputWrapper} from "../base/input_wrapper";
 import {useValidation} from "../base/use_validation";
 import React, {forwardRef, useImperativeHandle, useRef, useState} from "react";
 import {InputFieldWrapper} from "../base/input_field_wrapper";
@@ -82,7 +82,7 @@ export const FilePicker = forwardRef<InputRef, FileInputProps>((p, ref) => {
         }}>
             {files.map(x => new KeyValuePair(x.name + x.size, x.name)).map(item =>
                 <div
-                    key={item.Key}
+                    key={item.key}
                     style={{
                         padding: `${Spacings.XS}px ${Spacings.S}px`,
                         fontSize: FontSizes.S,
@@ -92,8 +92,8 @@ export const FilePicker = forwardRef<InputRef, FileInputProps>((p, ref) => {
                         alignItems: 'center',
                         justifyContent: 'space-between',
                     }}>
-                    <span>{item.Value}</span>
-                    <button onClick={() => setFiles(files.filter(x => x.name + x.size !== item.Key))}>
+                    <span>{item.value}</span>
+                    <button onClick={() => setFiles(files.filter(x => x.name + x.size !== item.key))}>
                         X
                     </button>
                 </div>
