@@ -1,4 +1,4 @@
-import React, {CSSProperties, useState} from "react";
+import React, {CSSProperties, useEffect, useRef, useState} from "react";
 import {PageProps} from "./pages";
 import {Colors} from "./style/colors";
 import {Background} from "./components/Primitives/Background";
@@ -11,13 +11,39 @@ import {HeaderButton} from "./header_button";
 import {LogoutButton} from "./logout_Button";
 import {AiOutlineMenuUnfold} from "@react-icons/all-files/ai/AiOutlineMenuUnfold";
 
+const EDGE_ZONE_PX = 10;
 
 export const Header: React.FC<{
     items: PageProps[];
     activeId: string;
     onSelect: (id: string) => void;
 }> = ({items, activeId, onSelect}) => {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
+    const headerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const onMouseMove = (e: MouseEvent) => {
+            // Если меню открыто — не реагируем на движение
+            if (isOpen) return;
+
+            // Курсор в зоне у левого края — открываем
+            if (e.clientX <= EDGE_ZONE_PX) {
+                setIsOpen(true);
+            }
+        };
+
+        document.addEventListener('mousemove', onMouseMove);
+        return () => document.removeEventListener('mousemove', onMouseMove);
+    }, [isOpen]);
+
+    const edgeZoneStyle: CSSProperties = {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: EDGE_ZONE_PX,
+        height: '100vh',
+        zIndex: 998,
+    };
 
     const burgerStyle: CSSProperties = {
         position: 'fixed',
@@ -45,19 +71,25 @@ export const Header: React.FC<{
     };
 
     return <>
-        <div style={burgerStyle}>
-            <Background color={Colors.secondaryBackground} onMouseEnterColor={Colors.secondaryHover}>
-                <Clickable onClick={() => setIsOpen(true)}>
-                    <XText align={"center"}>
-                        <AiOutlineMenuUnfold/>
-                    </XText>
-                </Clickable>
-            </Background>
-        </div>
+        {/* Невидимая зона у левого края — открывает меню */}
+        <div style={edgeZoneStyle}/>
+
+        {/* Кнопка-бургер — открывает меню вручную (когда оно закрыто) */}
+        {/*{!isOpen && (
+            <div style={burgerStyle}>
+                <Background color={Colors.secondaryBackground} onMouseEnterColor={Colors.secondaryHover}>
+                    <Clickable onClick={() => setIsOpen(true)}>
+                        <XText align={"center"}>
+                            <AiOutlineMenuUnfold/>
+                        </XText>
+                    </Clickable>
+                </Background>
+            </div>
+        )}*/}
 
         {isOpen && <Overlay onClick={() => setIsOpen(false)}/>}
 
-        <div style={headerStyle}>
+        <div style={headerStyle} ref={headerRef}>
             <Background color={Colors.secondaryBackground}>
                 <Column>
                     <Column gap={Spacings.S}>

@@ -2,7 +2,6 @@ import React from "react";
 
 type CellBuilder<T> = (item: T, index: number) => React.ReactNode;
 
-
 export interface TableColumn<T> {
     width?: string;
     colSpan?: number;
