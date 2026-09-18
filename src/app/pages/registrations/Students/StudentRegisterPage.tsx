@@ -19,7 +19,11 @@ export const StudentRegisterPage: React.FC = () => {
 
     return CreateTab<StudentRegisterModel>({
         addFunc: StudentRepository.post,
-        form: StudentForm,
+        form: (props) => <StudentForm
+            {...props}
+            groups={groups}
+            onGroupAdded={(g) => setGroups(prev => [...prev, g])}
+        />,
         tableChildrenBuilder: (s, _, results) => [
             <XText>{`${s.lastName} ${s.firstName} ${s.patronymic}`}</XText>,
             <BlueBorderBox inline>{groups.find(x => x.id === s.groupId)?.name}</BlueBorderBox>,

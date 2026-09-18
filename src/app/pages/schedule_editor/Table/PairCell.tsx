@@ -35,6 +35,7 @@ export interface PairCellValue {
 
 export const PairCell: React.FC<{
     teachers: ScheduleTeacherResponse[];
+    allDisciplines: KeyValuePair[];
     value?: PairCellValue;
     backgroundColor: string;
     group: KeyValuePair;
@@ -55,7 +56,7 @@ export const PairCell: React.FC<{
         else
             await PairsRepository.post({
                 groupId: p.group.Key,
-                dayId: p.day.Value,
+                dayId: p.day.Key,
                 number: p.pairNumber,
                 cabinet: editData!.cabinet,
                 teacherId: editData!.teacher!.Key,
@@ -146,7 +147,8 @@ export const PairCell: React.FC<{
                         items={p.teachers.map(x => new KeyValuePair(x.id!, x.fullName!))}
                         onValidChange={async (v) => {
                             setEditData({...editData, teacher: v});
-                            setDisciplines(disciplines.filter(x => x.Key === v.Key));
+                            const disciplinesIds = p.teachers.find(t => t.id === v.Key)?.disciplineIds;
+                            setDisciplines(p.allDisciplines.filter(x => disciplinesIds?.includes(x.Key)));
                         }}
                     />
                     {editData?.teacher && <Autocomplete

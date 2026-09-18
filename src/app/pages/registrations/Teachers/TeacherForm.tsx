@@ -41,21 +41,21 @@ export const TeacherForm: React.FC<{ onAdd: (teacher: TeacherRegisterModel) => v
         <Row gap={Spacings.L}>
             <Column gap={Spacings.L}>
                 <TextInput ref={refs.secondName} label="Фамилия" isRequired
-                    onValidChange={(value) => setFormData({...formData, lastName: value})}
+                           onValidChange={(value) => setFormData({...formData, lastName: value})}
                 />
                 <TextInput ref={refs.firstName} label="Имя" isRequired
-                    onValidChange={(value) => setFormData({...formData, firstName: value})}
+                           onValidChange={(value) => setFormData({...formData, firstName: value})}
                 />
                 <TextInput ref={refs.patronymic} label="Отчество"
-                    onValidChange={(value) => setFormData({...formData, patronymic: value})}
+                           onValidChange={(value) => setFormData({...formData, patronymic: value})}
                 />
             </Column>
             <Column gap={Spacings.L}>
                 <EmailInput ref={refs.email} isRequired
-                    onValidChange={(value) => setFormData({...formData, email: value})}
+                            onValidChange={(value) => setFormData({...formData, email: value})}
                 />
                 <PhoneInput ref={refs.phone} isRequired
-                    onValidChange={(value) => setFormData({...formData, phone: value})}
+                            onValidChange={(value) => setFormData({...formData, phone: value})}
                 />
                 <Multiselect
                     ref={refs.disciplinesIds}
@@ -64,8 +64,9 @@ export const TeacherForm: React.FC<{ onAdd: (teacher: TeacherRegisterModel) => v
                     items={disciplines.map(x => new KeyValuePair(x.id!, x.name!))}
                     onValidChange={value => setFormData({...formData, disciplinesIds: value.map(x => x.Key)})}
                     onAddItem={async (item) => {
-                        await DisciplinesRepository.post({name: item});
-                        setDisciplines(await DisciplinesRepository.get());
+                        const newDiscipline = await DisciplinesRepository.post({name: item});
+                        setDisciplines([...disciplines, newDiscipline]);
+                        return new KeyValuePair(newDiscipline.id!, newDiscipline.name!);
                     }}
                 />
             </Column>

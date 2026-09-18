@@ -8,7 +8,7 @@ export class KeyValuePair {
     }
 
     public get Value(): string {
-        return this.value.toLowerCase();
+        return this.value;
     }
 
     public get Key(): string {

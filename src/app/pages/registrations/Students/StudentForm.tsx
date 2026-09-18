@@ -13,10 +13,13 @@ import {InputRef} from "../../../components/Inputs/base/Input_ref";
 import {FormWindow} from "../../../components/Inputs/form/form_window";
 import {KeyValuePair} from "../../../components/Inputs/base/key_value_pair";
 
-export const StudentForm: React.FC<{ onAdd: (student: StudentRegisterModel) => void }> = ({onAdd}) => {
+export const StudentForm: React.FC<{
+    onAdd: (student: StudentRegisterModel) => void;
+    groups: ManagerGroupResponse[];
+    onGroupAdded: (group: ManagerGroupResponse) => void;
+}> = (p) => {
     const empty: StudentRegisterModel = {firstName: '', lastName: '', patronymic: '', email: '', phone: '', groupId: '',};
     const [formData, setFormData] = useState<StudentRegisterModel>(empty);
-    const [groups, setGroups] = useState<ManagerGroupResponse[]>([]);
 
     const refs = {
         secondName: useRef<InputRef>(null),
@@ -27,13 +30,8 @@ export const StudentForm: React.FC<{ onAdd: (student: StudentRegisterModel) => v
         phone: useRef<InputRef>(null),
     };
 
-    useEffect(() => {
-        const fetchData = async () => setGroups(await GroupsRepository.get());
-        fetchData();
-    }, []);
-
     const handleSubmit = () => {
-        onAdd({...formData});
+        p.onAdd({...formData});
         setFormData(empty);
     };
 
@@ -56,11 +54,12 @@ export const StudentForm: React.FC<{ onAdd: (student: StudentRegisterModel) => v
                     label="Группа"
                     placeholder="Напр. ИВ-101"
                     isRequired
-                    items={groups.map(x => new KeyValuePair(x.id!, x.name!))}
+                    items={p.groups.map(x => new KeyValuePair(x.id!, x.name!))}
                     onValidChange={value => setFormData(prev => ({...prev, groupId: value.Key}))}
                     onAddItem={async (item) => {
-                        await GroupsRepository.post({name: item});
-                        setGroups(await GroupsRepository.get());
+                        const newGroup = await GroupsRepository.post({name: item});
+                        p.onGroupAdded(newGroup);
+                        return new KeyValuePair(newGroup.id!, newGroup.name!);
                     }}
                 />
                 <EmailInput ref={refs.email} isRequired

@@ -86,6 +86,7 @@ export const ScheduleTable: React.FC<{
             header: <ScheduleHeader>{group.name}</ScheduleHeader>,
             cell: {
                 builder: (x: PairRowProps, _: number) => <PairCell
+                    allDisciplines={disciplines?.map(x => new KeyValuePair(x.id!, x.name!))!}
                     value={x.pairs.get(group.id!)}
                     teachers={teachers!}
                     group={new KeyValuePair(group.id!, group.name!)}

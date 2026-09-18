@@ -104,7 +104,7 @@ export function CreateTab<T>(p: ManagePageProps<T>) {
                     <Column gap={Spacings.XL}>
                         {p.form({onAdd: handleAdd})}
                         {values.length > 0 && <XWindow title={p.tableTitle}>
-                            <Table columns={columns} items={values.reverse()}/>
+                            <Table columns={columns} items={[...values].reverse()}/>
                             <Row gap={Spacings.S}>
                                 <RowElement sizePercent={90}>
                                     <PrimaryButton disabled={loading} onClick={handleRequest}>

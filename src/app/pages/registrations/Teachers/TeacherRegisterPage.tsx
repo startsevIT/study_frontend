@@ -8,16 +8,15 @@ import {XText} from "../../../components/Primitives/Text";
 
 export const TeacherRegisterPage: React.FC = () =>
     CreateTab<TeacherRegisterModel>({
-        addFunc:  TeacherRepository.post,
+        addFunc: TeacherRepository.post,
         form: TeacherForm,
-        tableChildrenBuilder: (s, _, results) => {
-            return [
+        tableChildrenBuilder: (s, _, results) =>
+            [
                 <XText>{`${s.lastName} ${s.firstName} ${s.patronymic}`}</XText>,
                 contactSpan(results, s.email!),
                 contactSpan(results, s.phone!),
                 <XText>{`Всего: ${s.disciplinesIds!.length}`}</XText>
-            ];
-        },
+            ],
         tableHeaders: ["ФИО", "Email", "Телефон", "Дисциплины"],
         tableTitle: "Преподаватели",
     })

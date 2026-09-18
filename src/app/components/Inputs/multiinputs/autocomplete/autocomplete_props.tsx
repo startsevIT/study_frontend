@@ -3,5 +3,5 @@ import {KeyValuePair} from "../../base/key_value_pair";
 
 export interface AutocompleteProps extends SimpleInputProps<KeyValuePair> {
     items: KeyValuePair[];
-    onAddItem?: (item: string) => void;
+    onAddItem?: (item: string) => Promise<KeyValuePair>;
 }

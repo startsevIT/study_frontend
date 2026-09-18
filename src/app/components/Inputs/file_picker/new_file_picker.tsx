@@ -2,12 +2,12 @@
 import {useValidation} from "../base/use_validation";
 import React, {forwardRef, useImperativeHandle, useRef, useState} from "react";
 import {InputFieldWrapper} from "../base/input_field_wrapper";
-import {InputCountSpan} from "../multiinputs/multiselect/multiselect";
 import {KeyValuePair} from "../base/key_value_pair";
 import {FontSizes, Radiuses, Spacings} from "../../../style/spacings";
 import {Colors} from "../../../style/colors";
 import {InputRef} from "../base/Input_ref";
 import {FileInputProps} from "./file_input_props";
+import {InputCountSpan} from "../base/inputCountSpan";
 
 export const FilePicker = forwardRef<InputRef, FileInputProps>((p, ref) => {
     const [files, setFiles] = useState<File[]>([]);

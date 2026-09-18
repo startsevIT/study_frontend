@@ -11,8 +11,8 @@ import {Dropdown} from "../base/dropdown";
 
 export const Autocomplete = forwardRef<InputRef, AutocompleteProps>((p, ref) => {
     const [value, setValue] = useState<KeyValuePair | null>(null);
-    const [query, setQuery] = useState('');
     const [isOpen, setIsOpen] = useState(false);
+    const [query, setQuery] = useState('');
 
     const validation = useValidation<KeyValuePair | null>({
         isRequired: p.isRequired,
@@ -27,13 +27,19 @@ export const Autocomplete = forwardRef<InputRef, AutocompleteProps>((p, ref) => 
     }));
 
     const toggleItem = (key: string) => {
-        const value = p.items.find(x => x.Key === key);
-        if (!value)
+        const newValue = p.items.find(x => x.Key === key);
+        if (!newValue)
             return;
-
-        setValue(value);
-        setIsOpen(false);
+        update(newValue);
     };
+
+    const update = (value: KeyValuePair) => {
+        setValue(value);
+        p.onValidChange(value);
+        validation.clearError();
+        setIsOpen(false);
+        setQuery('');
+    }
 
     return <InputWrapper error={validation.error} label={p.label} isRequired={p.isRequired}>
         <DropdownWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
@@ -49,7 +55,11 @@ export const Autocomplete = forwardRef<InputRef, AutocompleteProps>((p, ref) => 
                 query={query}
                 items={p.items}
                 toggleItem={toggleItem}
-                isSelected={k => value?.Key === k}/>}
+                isSelected={k => value?.Key === k}
+                onAddItem={async (v) => {
+                    const newValue = await p.onAddItem!(v);
+                    update(newValue);
+                }}/>}
         </DropdownWrapper>
     </InputWrapper>;
 })
