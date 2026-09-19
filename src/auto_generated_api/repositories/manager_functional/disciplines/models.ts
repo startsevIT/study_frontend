@@ -2,7 +2,7 @@
 // Этот файл сгенерирован автоматически. Не редактируйте вручную.
 
 export interface DisciplineCreateRequest {
-  name?: string | null;
+  name: string;
 }
 
 export interface DisciplineUpdateRequest {
@@ -10,7 +10,7 @@ export interface DisciplineUpdateRequest {
 }
 
 export interface ManagerDisciplineResponse {
-  id?: string;
-  name?: string | null;
+  id: string;
+  name: string;
 }
 

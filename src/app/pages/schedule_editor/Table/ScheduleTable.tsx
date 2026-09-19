@@ -30,28 +30,28 @@ export const ScheduleTable: React.FC<{
         const fetchData = async () => {
             setLoading(true);
             try {
-                const disciplinesMap = new Map(disciplines!.map(d => [d.id, d]));
-                const teachersMap = new Map(teachers!.map(t => [t.id, t]));
+                const disciplinesMap = new Map(disciplines.map(d => [d.id, d]));
+                const teachersMap = new Map(teachers.map(t => [t.id, t]));
 
-                const grouped = days!.flatMap(day => day.times!.map((time, pairNumber) => {
-                        const currentPairs = pairs!.filter(p => p.dayId === day.id && p.number === pairNumber);
+                const grouped = days.flatMap(day => day.times.map((time, pairNumber) => {
+                        const currentPairs = pairs.filter(p => p.dayId === day.id && p.number === pairNumber);
 
                         return {
-                            pairCount: day.times!.length,
-                            day: new KeyValuePair(day.id!, day.date!),
+                            pairCount: day.times.length,
+                            day: new KeyValuePair(day.id, day.date),
                             time: time.slice(0, 5),
                             pairNumber: pairNumber,
-                            pairs: new Map(currentPairs.map(pair => [pair.groupId!, {
-                                id: pair.id!,
-                                discipline: new KeyValuePair(disciplinesMap.get(pair.disciplineId!)!.id!, disciplinesMap.get(pair.disciplineId!)!.name!),
-                                cabinet: pair.cabinet!,
-                                teacher: new KeyValuePair(teachersMap.get(pair.teacherId!)!.id!, teachersMap.get(pair.teacherId!)!.fullName!),
+                            pairs: new Map(currentPairs.map(pair => [pair.groupId, {
+                                id: pair.id,
+                                discipline: new KeyValuePair(disciplinesMap.get(pair.disciplineId)!.id, disciplinesMap.get(pair.disciplineId)!.name),
+                                cabinet: pair.cabinet,
+                                teacher: new KeyValuePair(teachersMap.get(pair.teacherId)!.id, teachersMap.get(pair.teacherId)!.fullName),
                             }]))
                         };
                     })
                 ).sort((l, r) => {
                     if (l.day.value !== r.day.value) {
-                        return l.day.value! > r.day.value! ? 1 : -1;
+                        return l.day.value > r.day.value ? 1 : -1;
                     }
                     return l.pairNumber - r.pairNumber;
                 });
@@ -82,14 +82,14 @@ export const ScheduleTable: React.FC<{
                 </VerticalHeader>
             }
         },
-        ...groups!.map(group => ({
+        ...groups.map(group => ({
             header: <ScheduleHeader>{group.name}</ScheduleHeader>,
             cell: {
                 builder: (x: PairRowProps, _: number) => <PairCell
-                    allDisciplines={disciplines?.map(x => new KeyValuePair(x.id!, x.name!))!}
-                    value={x.pairs.get(group.id!)}
-                    teachers={teachers!}
-                    group={new KeyValuePair(group.id!, group.name!)}
+                    allDisciplines={disciplines?.map(x => new KeyValuePair(x.id, x.name))}
+                    value={x.pairs.get(group.id)}
+                    teachers={teachers}
+                    group={new KeyValuePair(group.id, group.name)}
                     day={x.day}
                     pairNumber={x.pairNumber}
                     backgroundColor={new Date(x.day.value).getDay() % 2 === 0 ? Colors.secondaryBackground : Colors.secondaryBackground2}

@@ -2,47 +2,47 @@
 // Этот файл сгенерирован автоматически. Не редактируйте вручную.
 
 export interface DayUpdateRequest {
-  number?: number;
-  time?: string;
+  number: number;
+  time: string;
 }
 
 export interface ScheduleDayResponse {
-  id?: string;
-  date?: string;
-  times?: string[] | null;
+  id: string;
+  date: string;
+  times: string[];
 }
 
 export interface ScheduleDisciplineResponse {
-  id?: string;
-  name?: string | null;
+  id: string;
+  name: string;
 }
 
 export interface ScheduleGroupResponse {
-  id?: string;
-  name?: string | null;
+  id: string;
+  name: string;
 }
 
 export interface SchedulePairResponse {
-  id?: string;
-  groupId?: string;
-  dayId?: string;
-  number?: number;
-  disciplineId?: string;
-  teacherId?: string;
-  cabinet?: string | null;
+  id: string;
+  groupId: string;
+  dayId: string;
+  number: number;
+  disciplineId: string;
+  teacherId: string;
+  cabinet: string;
 }
 
 export interface ScheduleResponse {
-  days?: ScheduleDayResponse[] | null;
-  pairs?: SchedulePairResponse[] | null;
-  groups?: ScheduleGroupResponse[] | null;
-  disciplines?: ScheduleDisciplineResponse[] | null;
-  teachers?: ScheduleTeacherResponse[] | null;
+  days: ScheduleDayResponse[];
+  pairs: SchedulePairResponse[];
+  groups: ScheduleGroupResponse[];
+  disciplines: ScheduleDisciplineResponse[];
+  teachers: ScheduleTeacherResponse[];
 }
 
 export interface ScheduleTeacherResponse {
-  id?: string;
-  fullName?: string | null;
-  disciplineIds?: string[] | null;
+  id: string;
+  fullName: string;
+  disciplineIds: string[];
 }
 

@@ -91,7 +91,7 @@ export const PairCell: React.FC<{
                             <div style={{borderRight: `1px solid ${Colors.border}`, height: 70}}>
                                 <Padding size={5}>
                                     <XText size={FontSizes.S} align={"center"}>
-                                        {data!.discipline?.value ?? "ошибка"}
+                                        {data.discipline?.value ?? "ошибка"}
                                     </XText>
                                 </Padding>
                             </div>
@@ -100,7 +100,7 @@ export const PairCell: React.FC<{
                             <div style={{paddingLeft: 5}}>
                                 <Center>
                                     <XText size={FontSizes.S} fontWeight={500}>
-                                        {data!.cabinet}
+                                        {data.cabinet}
                                     </XText>
                                 </Center>
                             </div>
@@ -110,7 +110,7 @@ export const PairCell: React.FC<{
             </ColumnElement>
             <Center>
                 <XText size={FontSizes.S} color={Colors.text} align={"center"}>
-                    {data!.teacher?.value ?? "ошибка"}
+                    {data.teacher?.value ?? "ошибка"}
                 </XText>
             </Center>
         </Column>
@@ -144,7 +144,7 @@ export const PairCell: React.FC<{
                         label="Преподаватель"
                         placeholder={data?.teacher?.value ?? "Начните вводить значение..."}
                         isRequired
-                        items={p.teachers.map(x => new KeyValuePair(x.id!, x.fullName!))}
+                        items={p.teachers.map(x => new KeyValuePair(x.id, x.fullName))}
                         onValidChange={async (v) => {
                             setEditData({...editData, teacher: v});
                             const disciplinesIds = p.teachers.find(t => t.id === v.key)?.disciplineIds;

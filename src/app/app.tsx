@@ -3,9 +3,11 @@ import {Navigate, Route, Routes} from "react-router-dom";
 import {Layout} from "./layout";
 import {pages} from "./pages";
 import {LoginPage} from "./pages/login";
+import {setAuthTokenProvider} from "../auto_generated_api/http";
 
 export const App: React.FC = () => {
     const token = localStorage.getItem('token');
+    setAuthTokenProvider(() => token)
     const roles = JSON.parse(localStorage.getItem('roles') || '[]');
 
     return <Routes>

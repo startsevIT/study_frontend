@@ -22,7 +22,7 @@ export const StudentForm: React.FC<{
     const [formData, setFormData] = useState<StudentRegisterModel>(empty);
 
     const refs = {
-        secondName: useRef<InputRef>(null),
+        lastName: useRef<InputRef>(null),
         firstName: useRef<InputRef>(null),
         patronymic: useRef<InputRef>(null),
         groupId: useRef<InputRef>(null),
@@ -38,8 +38,8 @@ export const StudentForm: React.FC<{
     return <FormWindow handleSubmit={handleSubmit} buttonText="Добавить студента" title="Регистрация студентов" refs={refs}>
         <Row gap={Spacings.L}>
             <Column gap={Spacings.L}>
-                <TextInput ref={refs.secondName} label="Фамилия" isRequired
-                           onValidChange={value => setFormData(prev => ({...prev, secondName: value}))}
+                <TextInput ref={refs.lastName} label="Фамилия" isRequired
+                           onValidChange={value => setFormData(prev => ({...prev, lastName: value}))}
                 />
                 <TextInput ref={refs.firstName} label="Имя" isRequired
                            onValidChange={value => setFormData(prev => ({...prev, firstName: value}))}
@@ -54,12 +54,12 @@ export const StudentForm: React.FC<{
                     label="Группа"
                     placeholder="Напр. ИВ-101"
                     isRequired
-                    items={p.groups.map(x => new KeyValuePair(x.id!, x.name!))}
+                    items={p.groups.map(x => new KeyValuePair(x.id, x.name))}
                     onValidChange={value => setFormData(prev => ({...prev, groupId: value.key}))}
                     onAddItem={async (item) => {
                         const newGroup = await GroupsRepository.post({name: item});
                         p.onGroupAdded(newGroup);
-                        return new KeyValuePair(newGroup.id!, newGroup.name!);
+                        return new KeyValuePair(newGroup.id, newGroup.name);
                     }}
                 />
                 <EmailInput ref={refs.email} isRequired

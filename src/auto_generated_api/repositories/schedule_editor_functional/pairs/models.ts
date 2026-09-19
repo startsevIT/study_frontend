@@ -2,12 +2,12 @@
 // Этот файл сгенерирован автоматически. Не редактируйте вручную.
 
 export interface PairCreateRequest {
-  groupId?: string;
-  dayId?: string;
-  disciplineId?: string;
-  teacherId?: string;
-  number?: number;
-  cabinet?: string | null;
+  groupId: string;
+  dayId: string;
+  disciplineId: string;
+  teacherId: string;
+  number: number;
+  cabinet: string;
 }
 
 export interface PairUpdateRequest {

@@ -4,11 +4,6 @@ import { httpRequest } from '../../../http';
 import type * as Models from './models';
 
 export class ScheduleEditorRepository {
-  static async postEmptyWeek(date: string): Promise<void> {
-    return httpRequest<void>('POST', `/api/schedule_editor/${date}`, {
-    });
-  }
-
   static async get(date: string): Promise<Models.ScheduleResponse> {
     return httpRequest<Models.ScheduleResponse>('GET', `/api/schedule_editor/${date}`, {
     });

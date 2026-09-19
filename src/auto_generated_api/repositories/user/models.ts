@@ -8,13 +8,13 @@ export enum Role {
 }
 
 export interface UserLoginRequest {
-  login?: string | null;
-  password?: string | null;
+  login: string;
+  password: string;
 }
 
 export interface UserLoginResponse {
-  token?: string | null;
-  roles?: Role[] | null;
-  fullName?: string | null;
+  token: string;
+  roles: Role[];
+  fullName: string;
 }
 

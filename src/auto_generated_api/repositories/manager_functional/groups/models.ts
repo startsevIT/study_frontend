@@ -2,7 +2,7 @@
 // Этот файл сгенерирован автоматически. Не редактируйте вручную.
 
 export interface GroupCreateRequest {
-  name?: string | null;
+  name: string;
 }
 
 export interface GroupUpdateRequest {
@@ -10,7 +10,7 @@ export interface GroupUpdateRequest {
 }
 
 export interface ManagerGroupResponse {
-  id?: string;
-  name?: string | null;
+  id: string;
+  name: string;
 }
 

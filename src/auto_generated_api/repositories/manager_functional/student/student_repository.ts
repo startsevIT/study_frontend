@@ -10,4 +10,9 @@ export class StudentRepository {
     });
   }
 
+  static async get(): Promise<Models.ManagerGroupsWithStudentsResponse[]> {
+    return httpRequest<Models.ManagerGroupsWithStudentsResponse[]>('GET', `/api/student`, {
+    });
+  }
+
 }

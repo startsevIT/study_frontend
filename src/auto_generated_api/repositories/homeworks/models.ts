@@ -2,19 +2,19 @@
 // Этот файл сгенерирован автоматически. Не редактируйте вручную.
 
 export interface HomeworkCreateRequest {
-  disciplineId?: string;
-  title?: string | null;
-  description?: string | null;
-  deadline?: string;
+  disciplineId: string;
+  title: string;
+  description: string;
+  deadline: string;
   groupIds?: string[] | null;
   studentIds?: string[] | null;
 }
 
 export interface HomeworkTaskRateRequest {
-  mark?: number;
+  mark: number;
 }
 
 export interface HomeworkTaskSubmitRequest {
-  content?: string | null;
+  content: string;
 }
 

@@ -27,8 +27,8 @@ export const StudentRegisterPage: React.FC = () => {
         tableChildrenBuilder: (s, _, results) => [
             <XText>{`${s.lastName} ${s.firstName} ${s.patronymic}`}</XText>,
             <BlueBorderBox inline>{groups.find(x => x.id === s.groupId)?.name}</BlueBorderBox>,
-            contactSpan(results, s.email!),
-            contactSpan(results, s.phone!),
+            contactSpan(results, s.email),
+            contactSpan(results, s.phone),
         ],
         tableHeaders: ["ФИО", "Группа", "Email", "Телефон"],
         tableTitle: "Студенты",

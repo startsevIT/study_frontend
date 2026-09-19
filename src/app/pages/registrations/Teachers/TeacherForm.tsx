@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
 import {TeacherRegisterModel} from "../../../../auto_generated_api/repositories/manager_functional/teacher/models";
-import {ManagerDisciplineResponse} from "../../../../auto_generated_api/repositories/manager_functional/disciplines/models";
 import {DisciplinesRepository} from "../../../../auto_generated_api/repositories/manager_functional/disciplines/disciplines_repository";
 import {Row} from "../../../components/Primitives/Row/Row";
 import {Spacings} from "../../../style/spacings";
@@ -12,14 +11,15 @@ import {Multiselect} from "../../../components/Inputs/multiinputs/multiselect";
 import {InputRef} from "../../../components/Inputs/base/Input_ref";
 import {FormWindow} from "../../../components/Inputs/form/form_window";
 import {KeyValuePair} from "../../../components/Inputs/base/key_value_pair";
+import {ManagerDisciplineResponse} from "../../../../auto_generated_api/repositories/manager_functional/disciplines/models";
 
 export const TeacherForm: React.FC<{ onAdd: (teacher: TeacherRegisterModel) => void }> = ({onAdd}) => {
-    const empty = {firstName: '', secondName: '', patronymic: '', email: '', phone: '', disciplinesIds: []};
+    const empty = {firstName: '', lastName: '', patronymic: '', email: '', phone: '', disciplinesIds: []};
     const [formData, setFormData] = useState<TeacherRegisterModel>(empty);
     const [disciplines, setDisciplines] = useState<ManagerDisciplineResponse[]>([]);
 
     const refs = {
-        secondName: useRef<InputRef>(null),
+        lastName: useRef<InputRef>(null),
         firstName: useRef<InputRef>(null),
         patronymic: useRef<InputRef>(null),
         email: useRef<InputRef>(null),
@@ -40,7 +40,7 @@ export const TeacherForm: React.FC<{ onAdd: (teacher: TeacherRegisterModel) => v
     return <FormWindow handleSubmit={handleSubmit} buttonText="Добавить преподавателя" title="Регистрация преподавателей" refs={refs}>
         <Row gap={Spacings.L}>
             <Column gap={Spacings.L}>
-                <TextInput ref={refs.secondName} label="Фамилия" isRequired
+                <TextInput ref={refs.lastName} label="Фамилия" isRequired
                            onValidChange={(value) => setFormData({...formData, lastName: value})}
                 />
                 <TextInput ref={refs.firstName} label="Имя" isRequired
@@ -61,12 +61,12 @@ export const TeacherForm: React.FC<{ onAdd: (teacher: TeacherRegisterModel) => v
                     ref={refs.disciplinesIds}
                     isRequired
                     label={"Дисциплины"}
-                    items={disciplines.map(x => new KeyValuePair(x.id!, x.name!))}
+                    items={disciplines.map(x => new KeyValuePair(x.id, x.name))}
                     onValidChange={value => setFormData({...formData, disciplinesIds: value.map(x => x.key)})}
                     onAddItem={async (item) => {
                         const newDiscipline = await DisciplinesRepository.post({name: item});
                         setDisciplines([...disciplines, newDiscipline]);
-                        return new KeyValuePair(newDiscipline.id!, newDiscipline.name!);
+                        return new KeyValuePair(newDiscipline.id, newDiscipline.name);
                     }}
                 />
             </Column>

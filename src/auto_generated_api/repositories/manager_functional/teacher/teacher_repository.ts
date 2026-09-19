@@ -10,4 +10,9 @@ export class TeacherRepository {
     });
   }
 
+  static async get(): Promise<Models.ManagerTeachersResponse[]> {
+    return httpRequest<Models.ManagerTeachersResponse[]>('GET', `/api/teacher`, {
+    });
+  }
+
 }

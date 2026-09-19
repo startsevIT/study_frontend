@@ -9,6 +9,7 @@ import {TextInput} from "../components/Inputs/simple_inputs/text_input";
 import {PasswordInput} from "../components/Inputs/simple_inputs/password_input";
 import {InputRef} from "../components/Inputs/base/Input_ref";
 import {FormWindow} from "../components/Inputs/form/form_window";
+import {setAuthTokenProvider} from "../../auto_generated_api/http";
 
 export const LoginPage: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -26,9 +27,10 @@ export const LoginPage: React.FC = () => {
         setError(null);
         try {
             const res = await UserRepository.postLogin(formData);
-            localStorage.setItem('token', res.token!);
+            localStorage.setItem('token', res.token);
             localStorage.setItem('roles', JSON.stringify(res.roles));
-            localStorage.setItem('fullName', res.fullName!);
+            localStorage.setItem('fullName', res.fullName);
+            setAuthTokenProvider(() => res.token)
             window.location.href = '/';
         } catch (err: any) {
             setError(err.response?.data?.error || 'Ошибка входа');

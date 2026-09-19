@@ -13,9 +13,9 @@ export const TeacherRegisterPage: React.FC = () =>
         tableChildrenBuilder: (s, _, results) =>
             [
                 <XText>{`${s.lastName} ${s.firstName} ${s.patronymic}`}</XText>,
-                contactSpan(results, s.email!),
-                contactSpan(results, s.phone!),
-                <XText>{`Всего: ${s.disciplinesIds!.length}`}</XText>
+                contactSpan(results, s.email),
+                contactSpan(results, s.phone),
+                <XText>{`Всего: ${s.disciplinesIds.length}`}</XText>
             ],
         tableHeaders: ["ФИО", "Email", "Телефон", "Дисциплины"],
         tableTitle: "Преподаватели",
